@@ -348,23 +348,89 @@ function delay(ms) {
 
 // cookDinnerFast().then((result) => console.log(result));
 
-async function processOrder() {
+// async function processOrder() {
+//     try {
+//         console.log("Начинаем обработку заказа...");
+
+//         const checkStock = await delay(1000).then(() => "Товар в наличии");
+//         console.log(checkStock);
+
+//         const calculateCost = await delay(800).then(() => "Стоимость: 10000");
+//         console.log(calculateCost);
+
+//         const confirmOrder = await delay(500).then(() => "Заказ подтвержден");
+//         console.log(confirmOrder);
+
+//         return "Заказ оформлен";
+//     } catch (error) {
+//         console.log("Ошибка при оформлении заказа");
+//     }
+// }
+
+// processOrder().then((result) => console.log(result));
+
+console.log("Fetch API");
+
+// async function getUsers() {
+//     try {
+//         const response = await fetch("https://jsonplaceholder.typicode.com/users");
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP ошибка! Статус: ${response.status}`);
+//         }
+
+//         const users = await response.json();
+
+//         console.log("Первые 3 пользователя:");
+//         users.slice(0, 3).forEach((user) => {
+//             console.log(`- ${user.name} (${user.email})`);
+//         });
+//     } catch (error) {
+//         console.log("Ошибка при загрузке пользователей:", error.message);
+//     }
+// }
+
+// getUsers();
+
+// async function getUserById(id) {
+//     try {
+//         const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+//         const user = await response.json();
+
+//         console.log(`Пользователь #${id}:`);
+//         console.log(`Имя: ${user.name}`);
+//         console.log(`Город: ${user.address.city}`);
+//         console.log(`Компания: ${user.company.name}`);
+//     } catch (error) {
+//         console.log("Ошибка:", error.message);
+//     }
+// }
+
+// getUserById(1);
+
+async function createPost() {
     try {
-        console.log("Начинаем обработку заказа...");
+        const newPost = {
+            title: "Моя первая запись",
+            body: "Это содержимое моей первой записи в блоге",
+            userId: 1,
+        };
 
-        const checkStock = await delay(1000).then(() => "Товар в наличии");
-        console.log(checkStock);
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newPost),
+        });
 
-        const calculateCost = await delay(800).then(() => "Стоимость: 10000");
-        console.log(calculateCost);
-
-        const confirmOrder = await delay(500).then(() => "Заказ подтвержден");
-        console.log(confirmOrder);
-
-        return "Заказ оформлен";
+        const createdPost = await response.json();
+        console.log("Создана новая запись");
+        console.log("ID:", createdPost.id);
+        console.log("Заголовок:", createdPost.title);
     } catch (error) {
-        console.log("Ошибка при оформлении заказа");
+        console.log("Ошибка при создании записи:", error.message);
     }
 }
 
-processOrder().then((result) => console.log(result));
+createPost();
