@@ -1,7 +1,5 @@
 // console.log("\n=== Деструктуризация массивов ===");
 
-import { E } from "./math";
-
 // const colors = ["red", "green", "blue"];
 // const color1 = colors[0];
 // const color2 = colors[1];
@@ -193,13 +191,13 @@ import { E } from "./math";
 //     .then((result) => console.log("Результат:", result))
 //     .catch((error) => console.log("Ошибка:", error));
 
-// function delay(ms) {
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(`Прошло ${ms} миллисекунд`);
-//         }, ms);
-//     });
-// }
+function delay(ms) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(`Прошло ${ms} миллисекунд`);
+        }, ms);
+    });
+}
 
 // delay(1000)
 //     .then((message) => console.log(message));
@@ -250,20 +248,123 @@ import { E } from "./math";
 
 // 9.3. Практическое задание
 
-function checkInventory(product, inStock) {
-    return new Promise((resolve, reject) => {
-        if (inStock) {
-            resolve(`Товар "${product}" есть в наличии`);
-        } else {
-            reject(`Товара "${product}" нет на складе`);
-        }
-    });
+// function checkInventory(product, inStock) {
+//     return new Promise((resolve, reject) => {
+//         if (inStock) {
+//             resolve(`Товар "${product}" есть в наличии`);
+//         } else {
+//             reject(`Товара "${product}" нет на складе`);
+//         }
+//     });
+// }
+
+// checkInventory("Ноутбук", true)
+//     .then((message) => console.log(message))
+//     .catch((error) => console.log("Ошибка", error));
+
+// checkInventory("Телефон", false)
+//     .then((message) => console.log(message))
+//     .catch((error) => console.log("Ошибка", error));
+
+// console.log("Async/Await");
+
+// async function greet() {
+//     return "Привет!";
+// }
+
+// greet().then((message) => console.log(message));
+
+// function getWeather() {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve({ temp: 22, condition: "Солнечно" });
+//         }, 1000);
+//     });
+// }
+
+// async function showWeather() {
+//     console.log("Загрузка погоды...");
+//     const weather = await getWeather();
+//     console.log(`Температура: ${weather.temp}°C, ${weather.condition}`);
+// }
+
+// showWeather();
+
+// async function fetchData(shouldFail) {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             if (shouldFail) {
+//                 reject("Ошибка при загрузке данных");
+//             } else {
+//                 resolve({ data: "Важные данные" });
+//             }
+//         }, 800);
+//     });
+// }
+
+// async function getData() {
+//     try {
+//         const result = await fetchData(false);
+//         console.log("Успешно:", result.data);
+
+//         const failedResult = await fetchData(true);
+//         console.log("Это не выполнится");
+//     } catch (error) {
+//         console.log("Поймана ошибка:", error);
+//     }
+// }
+
+// getData();
+
+// async function cookDinner() {
+//     console.log("Начинаем готовить...");
+
+//     const pasta = await delay(1000).then(() => "Паста готова");
+//     console.log(pasta);
+
+//     const sauce = await delay(500).then(() => "Соус готов");
+//     console.log(sauce);
+
+//     const salad = await delay(700).then(() => "Салат готов");
+//     console.log(salad);
+
+//     return "Ужин готов!";
+// }
+
+// cookDinner().then((result) => console.log(result));
+
+// async function cookDinnerFast() {
+//     console.log("Готовим все одновременно...");
+
+//     const [pasta, sauce, salad] = await Promise.all([
+//         delay(1000).then(() => "Паста готова"),
+//         delay(500).then(() => "Соус готов"),
+//         delay(700).then(() => "Салат готов"),
+//     ]);
+
+//     console.log(pasta, sauce, salad);
+//     return "Ужин готов быстрее!";
+// }
+
+// cookDinnerFast().then((result) => console.log(result));
+
+async function processOrder() {
+    try {
+        console.log("Начинаем обработку заказа...");
+
+        const checkStock = await delay(1000).then(() => "Товар в наличии");
+        console.log(checkStock);
+
+        const calculateCost = await delay(800).then(() => "Стоимость: 10000");
+        console.log(calculateCost);
+
+        const confirmOrder = await delay(500).then(() => "Заказ подтвержден");
+        console.log(confirmOrder);
+
+        return "Заказ оформлен";
+    } catch (error) {
+        console.log("Ошибка при оформлении заказа");
+    }
 }
 
-checkInventory("Ноутбук", true)
-    .then((message) => console.log(message))
-    .catch((error) => console.log("Ошибка", error));
-
-checkInventory("Телефон", false)
-    .then((message) => console.log(message))
-    .catch((error) => console.log("Ошибка", error));
+processOrder().then((result) => console.log(result));
